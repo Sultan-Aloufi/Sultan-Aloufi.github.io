@@ -1,2 +1,1 @@
-# Sultan-Aloufi.github.io
-simple webpage 
+This blog site code is public

@@ -1,4 +1,4 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://sultan-aloufi.github.io'
 languageCode = 'en-us'
 title = 'the super secret club'
 theme = "PaperMod"

@@ -6,7 +6,7 @@ ShowReadingTime: true
 ShowWordCount: true
 ---
 
-I've an application that I want to ulter its behavior slightly to work for my specific usecase, but I don't have its source code. Can I ulter its behavior while its running? Yes, by a technique called Hooking. It works by intercepting function calls or messages passed between programs. The code that handles the interception is called a hook.
+I have an application that I want to alter its behavior slightly to work for my specific use case, but I don't have its source code. Can I alter its behavior while it's running? Yes, by a technique called Hooking. It works by intercepting function calls or messages passed between programs. The code that handles the interception is called a hook.
 
 So here is my challenge, I've to explain to you how function hooking works without any detail compromise. This post can't be long and the non-programmer should make sense of most of it.
 

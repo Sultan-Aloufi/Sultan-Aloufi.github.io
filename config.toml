@@ -28,7 +28,7 @@ Content = "I write about Computers and share what I find interesting"
 
 [[params.socialIcons]]
 name = "Youtube"
-url = "https://youtube.com/me"
+url = "https://www.youtube.com/watch?v=LaVPQe8Zf9o"
 
 [[params.socialIcons]]
 name = "Github"
@@ -36,4 +36,4 @@ url = "https://github.com/Sultan-Aloufi"
 
 [[params.socialIcons]]
 name = "Linkedin"
-url = "https://linkedin.com/Sultan"
+url = "https://www.linkedin.com/in/sultan-aloufi/"

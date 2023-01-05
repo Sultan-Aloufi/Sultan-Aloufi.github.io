@@ -1,4 +1,39 @@
 baseURL = 'https://sultan-aloufi.github.io'
 languageCode = 'en-us'
-title = 'the super secret club'
+title = "Sultan Aloufi  🇸🇦"
 theme = "PaperMod"
+
+[[menu.main]]
+identifier = "posts"
+name = "posts"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "projects"
+name = "projects"
+url = "/projects"
+weight = 20
+
+[[menu.main]]
+identifier = "about me"
+name = "about me"
+url = "/aboutme/"
+wight = 30
+
+
+[params.homeInfoParams]
+Title =  "Hello there"
+Content = "I write about Computers and share what I find interesting"
+
+[[params.socialIcons]]
+name = "Youtube"
+url = "https://youtube.com/me"
+
+[[params.socialIcons]]
+name = "Github"
+url = "https://github.com/Sultan-Aloufi"
+
+[[params.socialIcons]]
+name = "Linkedin"
+url = "https://linkedin.com/Sultan"

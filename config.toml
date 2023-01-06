@@ -21,9 +21,8 @@ name = "about me"
 url = "/aboutme/"
 wight = 30
 
-
 [params.homeInfoParams]
-Title =  "Hello there"
+Title =  "Sultan's home on the internet"
 Content = "I write about Computers and share what I find interesting"
 
 [[params.socialIcons]]

@@ -5,10 +5,10 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 ---
 
-#### I'm a Computer enthusiest who spends most time learning about computers and how they work. I mainly focus on Cybersecurity, Operating Systems, Networks, and Machine Learning
+#### I'm a Computer enthusiast who spends most time learning about computers and how they work. I mainly focus on Cybersecurity, Operating Systems, Networks, and Machine Learning
 
 
-## Prjects/Research
+## Projects/Research
 - Dr. Luyi’s Security Research Team (Current)
     - Research and investigate a real-world cybercrime discovered by the team in 2019 on popular Android and iOS apps called Cross Library Data Harvesting (XLDH)
     - Perform static and dynamic analysis on popular iOS and Android apps to detect malicious SKD’s integrated by the app for XLDH cases that stealthily steal user-sensitive data.

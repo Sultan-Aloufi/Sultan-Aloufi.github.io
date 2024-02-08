@@ -10,28 +10,28 @@ ShowRssButtonInSectionTermList: true
 UseHugoToc: true
 ---
 
-If you have been using GPT-4, then you realize how much better it is than the free version. It's not just the model itself that got a lot smarter at answering requests but also the tooling developed around it, like searching the internet to get you up-to-date responses if needed, being able to take files and analyze them, running code and then analyzing the result, and using a calculator for things involving math. It's becoming just like a human would behave when trying to find an answer, just a lot faster. Of course, you have to pay USD $20/month to use it.
+If you've ventured into the realm of AI with GPT-4, you're likely astounded by its capabilities compared to the free version. It's not merely the model's intelligence that's seen a significant boost, but also the surrounding infrastructure. Now, it can scour the internet for real-time information, analyze files, execute code, solve mathematical problems, and even act like a human in its quest for answers – only much faster. Of course, this enhanced experience comes at a cost, priced at $20/month.
 
-GPT-4 has been out for closer to a year, so a new model, GPT-5 or whatever it will be called, is likely to be released soon as such big models take an insane time and compute resource that companies only train such models once a year.
+Having been on the scene for nearly a year, it's no surprise that the next iteration, whether it's GPT-5 or some other name, is on the horizon. The release cycle for such large-scale models is understandably lengthy, as they demand an immense amount of time and computational resources. Companies typically undertake the arduous training process once a year.
 
-To give you an appreciation of how much time, effort, money, and compute these language models take to train, I will try to explain what it takes to produce a model like GPT-4.
+To truly grasp the monumental effort required to produce a model like GPT-4, let's delve into the high-level training process:
 
 
- ## High-level training process for a model like GPT-4:
+ ## High-level Training Process for a Model like GPT-4:
 
-### First stage: pre-training (done once a year)
+### First Stage: Pre-training (Performed Annually)
 
-- Collect 100TB of internet data (low-quality data)
-    - crawl the internet, Common Crawl
-- Train a transformer (a type of neural network) on that data
-    - likely need 60K GPUs or more (> USD $100m)
-    - training takes months and there will be errors and issues trying to manage that many GPUs coherently
-    - the goal of the transformer is to just be able to predict the next token
-- Now you have a base model
-    - a useless model as it does not understand instructions; it can only complete text.
-- Do this stage once a year as it's expensive and time-consuming
+- Accumulate 100TB of internet data (mostly low-quality)
+    - Web crawling via platforms like Common Crawl
+- Train a transformer neural network on this data
+    - Requires upwards of 60K GPUs (costing over $100 million)
+    - Training spans months, with challenges in managing such a vast array of GPUs cohesively
+    - The primary objective of the transformer is to predict the next token in a sequence
+- This yields a base model, albeit functionally limited
+    - Capable only of completing text prompts
+- Conduct this stage annually due to its expense and time-intensiveness
 
-Trying to use this base model will look something like this:
+Interacting with this base model might yield results like:
 
 ```
 User: Who was the first president?
@@ -40,46 +40,44 @@ AI: The president of the United States is the head of state and head of governme
 
 ```
 
-So now you have a trained transformer that can only complete text. Continue training that model but this time, be very picky about the data you train it on.
+> **Note:** An example text converted into tokens which GPT-4 understands:
+> 
+> "Give me suggestions for a Refrigerator to buy"
+>
+> ![Cant't render image](../note.png)
+>
+> "[36227, 757, 18726, 369, 264, 75258, 859, 311, 3780]"
 
 
-### Second stage: fine-tuning (done every week)
-- Collect 100k high-quality ideal Q&A responses
-    - contract many experts in many fields to answer these questions correctly and with great precision
-    - companies like scala.ai provide such data
-- Continue training the base model from the first stage on this data
-    - continue to train the weights of the transformer from stage one
-    - takes a day to train
-- Collect 1M high-quality ideal comparisons
-    - a comparison is a question but with many qualifying answers (but one is usually the best)
-    - contract many experts in many fields to select the best answer for a prompt
-    - companies like scala.ai provide such data
-- Train a reward model (RLHF model) on the 1M high-quality ideal comparisons collected
-    - the algorithm is to predict which answer is the best
-- Collect 100k prompts (no responses) and continue training the transformer model to predict the next token using the trained reward model to generate tokens that maximize the reward
-- Now you have something like GPT-4
-- Do this second stage every week
+### Second Stage: Fine-tuning (Performed Weekly)
+- Gather 100k high-quality Q&A pairs
+    - Contract many experts in many fields to answer these questions correctly and with great precision
+    - Providers like scala.ai offer such datasets
+- Continue training the base model from stage one using this refined data
+    - Continues to refine the weights of the transformer network
+    - Training typically concludes within a day
+- Assemble 1M high-quality comparative prompts
+    - These entail questions with multiple potential answers, with one being deemed optimal
+    - Human experts curate the best responses for each prompt
+- Train a reward model (RLHF model) on the collected comparative data
+    - The objective is to predict the most suitable answer
+- Collect 100k prompts (sans responses) and continue training the transformer model to predict the next token using the trained reward model to generate tokens that maximize the reward
+- This culminates in a model akin to GPT-4
+- Repeat this fine-tuning process on a weekly basis
 
 
 
+The bulk of the financial and engineering investment for a model like GPT-4 (roughly 99%) is allocated to the initial pre-training stage.
 
-Most of the financial and engineering pain and time getting something like GPT-4 (99%) is spent on the first stage.
+Despite primarily being text-based, GPT-4 exhibits remarkable versatility by seamlessly integrating image and audio processing capabilities. How does it achieve this feat, you might wonder? Well, behind the scenes, there are specialized models dedicated to handling such inputs. For instance, when presented with an image, GPT-4 relies on a secret auxiliary model trained explicitly to generate detailed captions for images. This model serves as the bridge between visual data and GPT-4's text-based processing, enabling it to comprehend and respond to image-based queries. Similarly, for audio inputs, another discrete model is at play. This model is trained to convert voice inputs into highly accurate text transcripts, which are then fed into GPT-4 for further analysis. Consequently, whether it's deciphering text, interpreting images, or understanding spoken words, GPT-4 seamlessly navigates across various modalities to deliver comprehensive responses.
 
-Obviously, GPT-4 can also take images as input, but how so if it's only trained on text data? When you input an image, there is another model that is trained to output a detailed caption for that image and then give that to GPT-4. This secret model is only able to take an image and output a caption of that image. It can't do what GPT-4 does, and it's a fairly cheap and simple model to train compared to GPT-4.
-
-Well, GPT-4 can output images as well and how it does that is by using another secret small model that is only trained on taking a prompt and turning it into an image.
-
-Well, GPT-4 is able to take and output audio as well. There is a secret small model trained to take in voice input and convert it to high-accuracy text; that text is then given to GPT-4 to process, and the output from GPT-4 is then read out loud.
-
-Also, don't forget GPT-4 knows how to use a tool to search the internet when needed. It also knows how to use another tool that can run some code and return the result. These tools are cleverly built around GPT-4, so it all looks very seamless to you.
-
-As you can see, this is resembling an operating system and not just 'a smart chat assistant.' The GPT-4 model is the most important part and the one that goes through this complex training process. It's the CPU of the OS, processing instructions and communicating with IO to carry out tasks. The fun part is not only will the core model get better, but the tools and how they are integrated with the model will too.
+Furthermore, GPT-4 isn't just a passive responder; it's equipped with an arsenal of tools that enhance its functionality and user experience. For instance, integrated internet search capabilities enable GPT-4 to fetch real-time information from the vast expanse of the web, ensuring that its responses are always up-to-date and relevant. GPT-4 does not know how to fetch documents from the interent but knows what tool to call on for such tasks and then process the text response from that tool. Additionally, its ability to execute code expands its utility beyond text-based interactions, allowing users to perform computational tasks directly within the AI environment. For GPT-4, OpenAI provides and manages a containerized compute environemnt, transparant to the user, where your code can run and the result is fed back into GPT-4. These tools, intricately woven into GPT-4's framework, contribute to its transformation from a mere chat assistant to a sophisticated operating system-like entity. In this analogy, the GPT-4 model serves as the central processing unit (CPU), orchestrating tasks and seamlessly interfacing with various input-output mechanisms. As advancements continue to refine both the core model and its auxiliary functionalities, the evolution of GPT-4 promises not only enhanced intelligence but also a more intuitive and seamless user experience. The key ofcouse relies on the CPU being powerful enough.
 
 
 
 I got influenced by the idea of LLM OS first by non other than Andrej karpathy :-)
 
-![whyyy](../image.png "a slide from Andrej karpathy")
+![can't render image](../image.png "a slide from Andrej karpathy")
 
 [a slide from Andrej karpathy]
 

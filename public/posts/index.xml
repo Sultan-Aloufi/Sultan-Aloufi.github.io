@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Sultan Aloufi  🇸🇦</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Sultan Aloufi  🇸🇦</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 19 Jan 2024 23:09:39 -0500</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Newest Operating System</title>
+      <link>http://localhost:1313/posts/llm-os/llm-os/</link>
+      <pubDate>Fri, 19 Jan 2024 23:09:39 -0500</pubDate>
+      
+      <guid>http://localhost:1313/posts/llm-os/llm-os/</guid>
+      <description>&lt;p&gt;If you&amp;rsquo;ve ventured into the realm of AI with GPT-4, you&amp;rsquo;re likely astounded by its capabilities compared to the free version. It&amp;rsquo;s not merely the model&amp;rsquo;s intelligence that&amp;rsquo;s seen a significant boost, but also the surrounding infrastructure. Now, it can scour the internet for real-time information, analyze files, execute code, solve mathematical problems, and even act like a human in its quest for answers – only much faster. Of course, this enhanced experience comes at a cost, priced at $20/month.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hooking Demystified</title>
+      <link>http://localhost:1313/posts/hello/hello/</link>
+      <pubDate>Mon, 19 Dec 2022 16:19:32 -0500</pubDate>
+      
+      <guid>http://localhost:1313/posts/hello/hello/</guid>
+      <description>&lt;p&gt;I have an application that I want to alter its behavior slightly to work for my specific use case, but I don&amp;rsquo;t have its source code. Can I alter its behavior while it&amp;rsquo;s running? Yes, by a technique called Hooking. It works by intercepting function calls or messages passed between programs. The code that handles the interception is called a hook.&lt;/p&gt;
+&lt;p&gt;So here is my challenge, I&amp;rsquo;ve to explain to you how function hooking works without any detail compromise. This post can&amp;rsquo;t be long and the non-programmer should make sense of most of it.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Typing Sensitive Info, Check The URL First?</title>
+      <link>http://localhost:1313/posts/browser-in-browser-attack/bitb/</link>
+      <pubDate>Wed, 07 Sep 2022 12:24:12 -0400</pubDate>
+      
+      <guid>http://localhost:1313/posts/browser-in-browser-attack/bitb/</guid>
+      <description>&lt;p&gt;Most of you check the url before typing any sensitive info to guarantee that info will be sent to the website you intended to. There is &lt;a href=&#34;https://www.chase.com/&#34;&gt;https://www.chase.com&lt;/a&gt; and there is &lt;a href=&#34;https://www.chase.co/&#34;&gt;https://www.chase.co/&lt;/a&gt;. You also check the padlock to insure the connection is encrypted so even if your internet traffic is being monitered, the data is encrypted so only you and chase.com know how to encrypt them. The middle man only knows you went to chase.com but doesn&amp;rsquo;t know what you did there. This is also true for your ISP provider.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

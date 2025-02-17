@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Hooking Demystified | Sultan Aloufi  🇸🇦</title>
+<meta name="keywords" content="">
+<meta name="description" content="I have an application that I want to alter its behavior slightly to work for my specific use case, but I don&rsquo;t have its source code. Can I alter its behavior while it&rsquo;s running? Yes, by a technique called Hooking. It works by intercepting function calls or messages passed between programs. The code that handles the interception is called a hook.
+So here is my challenge, I&rsquo;ve to explain to you how function hooking works without any detail compromise. This post can&rsquo;t be long and the non-programmer should make sense of most of it.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/hello/hello/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bc1149f4a72aa4858d3a9f71462f75e5884ffe8073ea9d6d5761d5663d651e20.css" integrity="sha256-vBFJ9KcqpIWNOp9xRi915YhP/oBz6p1tV2HVZj1lHiA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/hello/hello/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Sultan Aloufi  🇸🇦 (Alt + H)">Sultan Aloufi  🇸🇦</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/projects" title="projects">
+                    <span>projects</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/aboutme/" title="about me">
+                    <span>about me</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Hooking Demystified
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2022-12-19 16:19:32 -0500 EST&#39;&gt;December 19, 2022&lt;/span&gt;&amp;nbsp;·&amp;nbsp;6 min&amp;nbsp;·&amp;nbsp;1223 words
+
+</div>
+  </header> 
+  <div class="post-content"><p>I have an application that I want to alter its behavior slightly to work for my specific use case, but I don&rsquo;t have its source code. Can I alter its behavior while it&rsquo;s running? Yes, by a technique called Hooking. It works by intercepting function calls or messages passed between programs. The code that handles the interception is called a hook.</p>
+<p>So here is my challenge, I&rsquo;ve to explain to you how function hooking works without any detail compromise. This post can&rsquo;t be long and the non-programmer should make sense of most of it.</p>
+<h3 id="intro">Intro<a hidden class="anchor" aria-hidden="true" href="#intro">#</a></h3>
+<h4 id="currently-running-program-a-cant-view-or-modify-running-program-bs-data-for-security-reasons-why">Currently running program A can&rsquo;t view or modify running Program B&rsquo;s data for security reasons, why?<a hidden class="anchor" aria-hidden="true" href="#currently-running-program-a-cant-view-or-modify-running-program-bs-data-for-security-reasons-why">#</a></h4>
+<ul>
+<li>Do you want your Call of Duty app that&rsquo;s running to also access and write to your Messaging app that you have open? No.</li>
+<li>Each program running must be able to run on the same machine hardware but they need to be isolated from each other for better security</li>
+<li>This isolation mechanism is provided by your Operating System (iOS, Macos, Windows, Android, etc..)</li>
+<li>Your Call of Duty app might be running more than just one program simultanously (to do more than one thing at once for faster load and response time)
+<ul>
+<li>When opening the app, the main program runs and it can create other programs that will run indepedently</li>
+<li>These programs can&rsquo;t communicate or share data with each other, Oh no!</li>
+<li>Your OS provides controlled mechanisms for these programs to talk and share data with each other if they need to. These mechanisms are called Inter-Process Communication (IPC)</li>
+<li>Most OS&rsquo;s IPC mechanisms are similar to each other with minor differences in implementation</li>
+</ul>
+</li>
+</ul>
+<h4 id="what-are-system-calls">What are system calls?<a hidden class="anchor" aria-hidden="true" href="#what-are-system-calls">#</a></h4>
+<ul>
+<li>
+<p>An operating system is just a program like all other programs on your computer. It&rsquo;s a huge complex program that has been maticslously desgined to be error reseliant and secure with full control over your computer to manage and share your computer&rsquo;s limited resources securly and fairly among other running programs. Thus when a program wants to print something to the screen, It can request it by calling a special function called a system call</p>
+</li>
+<li>
+<p>system calls are functions provided by your operating system that are when called, the following happens:</p>
+<ul>
+<li>
+<ol>
+<li>pause the program initiating the system call</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>do a context switch from user mode to kernel mode (sensitive mode allowing full control over the system without any permissions needed)</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>now the program transfered control to the kernel</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>service the request by performing the system call function (ex: open a file, print to screen, open a new program, connect to wifi)</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>kernel returns the result of system call function performed and transfers control to the program by returning to user mode and continuing the program execution from where it was stopped</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="two-different-hooking-techniques-examples">Two different Hooking techniques examples<a hidden class="anchor" aria-hidden="true" href="#two-different-hooking-techniques-examples">#</a></h3>
+<h4 id="hooking-example-1-using-ptrace-system-call">Hooking Example 1 (using Ptrace System call)<a hidden class="anchor" aria-hidden="true" href="#hooking-example-1-using-ptrace-system-call">#</a></h4>
+<ul>
+<li>Your Operating System provides the means to do so given the right permissions
+<ul>
+<li>The tracer program needs root permission to be allowed to control and insert the hook into another program (tracee)</li>
+<li>If you are familiar with debuggers like gdb, this is how it controls other processes and view or modify their internal state</li>
+<li>This method can be slow is it requires a lot of calls to ptrace to do anything and remeber ptrace is a system call so this can be slow when trying to modify large code of a big program</li>
+<li>In linux based OS&rsquo;s, Ptrace is a powerfull system that allows full control of the tracee program</li>
+<li>Ptrace is tricky to use as it requires intricate knowledge of the OS</li>
+</ul>
+</li>
+</ul>
+<p><strong>inject.c program</strong></p>
+<pre tabindex="0"><code>/* 
+* Tracer program 
+* Based on linux x86_64
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/ptrace.h&gt;
+#include &lt;sys/wait.h&gt;
+#include &lt;sys/user.h&gt;
+
+int main(int argc, char *argv[])
+{
+    pid_t pid;
+    long rip;
+
+    if (argc &lt; 3) {
+        fprintf(stderr, &#34;Usage: %s PID ADDRESS\n&#34;, argv[0]);
+        return 1;
+    }
+    
+    pid = atoi(argv[1]);
+    void *isAllowedAddr = (void *) strtoul(argv[2], NULL, 16);
+
+    // Attach to the target process
+    if (ptrace(PTRACE_ATTACH, pid, NULL, NULL) &lt; 0) {
+        perror(&#34;ptrace(PTRACE_ATTACH)&#34;);
+        return 1;
+    }
+
+    // Wait for the target process to stop
+    waitpid(pid, NULL, WSTOPPED);
+
+    // Save the original instruction at the breakpoint address
+    long original_instruction = ptrace(PTRACE_PEEKDATA, pid, isAllowedAddr, NULL);
+    
+    // Set a breakpoint at the address of the isAllowed function
+    ptrace(PTRACE_POKEDATA, pid, isAllowedAddr, (void *) (intptr_t) 0xCCCCCCCCCCCCCCCC);
+
+    // Continue execution of the target process
+    ptrace(PTRACE_CONT, pid, NULL, NULL);
+
+    // Wait for the target process to stop
+    waitpid(pid, NULL, WSTOPPED);
+
+    // Restore the original instruction at the breakpoint address
+    ptrace(PTRACE_POKEDATA, pid, isAllowedAddr, (void *) (intptr_t) original_instruction);
+    
+    // Get the value of the rip register
+    struct user_regs_struct regs;
+    ptrace(PTRACE_GETREGS, pid, NULL, &amp;regs);
+    rip = regs.rip;
+
+    // Print the value of the rip register
+    printf(&#34;rip = %lx, rdi = %d\n&#34;, rip, regs.rdi);
+    
+    // Modify the value of the rdi register (which holds the first function argument)
+    regs.rdi = 0;
+
+    // Write the changes to the registers of the target process
+    ptrace(PTRACE_SETREGS, pid, NULL, &amp;regs);
+
+    // Continue execution of the target process
+    ptrace(PTRACE_CONT, pid, NULL, NULL);
+
+    // Detach from the target process
+    ptrace(PTRACE_DETACH, pid, NULL, NULL);
+    
+    return 0;
+}
+</code></pre><p><strong>target.c program</strong></p>
+<pre tabindex="0"><code>/*
+* Target program
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+int
+isAllowed (int state)
+{
+  if(state == 0){
+	  return 0;
+  }
+  else {
+	  return 1; // not allowed
+  }
+}
+
+
+int
+main (int argc, char * argv[])
+{
+
+  int s = 1;
+
+  printf (&#34;isAllowed() is at %p\n&#34;, isAllowed);
+
+  while (1)
+  {
+    if(isAllowed(s) == 0){
+    	printf(&#34;Allowed! \n&#34;);
+    }
+    else{
+    	printf(&#34;Sorry. \n&#34;);
+    }
+
+    s += 1;
+    sleep (1);
+  }
+
+}
+</code></pre><h5 id="compile-and-run">Compile and run<a hidden class="anchor" aria-hidden="true" href="#compile-and-run">#</a></h5>
+<pre tabindex="0"><code>$ gcc -o inject inject.c -Wall
+$ gcc -o target target.c -Wall
+</code></pre><ul>
+<li>In this demo of function hooking using Ptrace, assume the following:
+<ul>
+<li>You don&rsquo;t have the source code of target.c</li>
+<li>Using a command line tool like <em>objdump</em>, you dissassemble the executable to assembly language, identify your target function to be <em>isAllowed</em> and know it&rsquo;s address during runtime
+<ul>
+<li>in this demo the address of isAllowed is given to you by the target program. This is unrealistic in real situations but Ptrace has full access to the target program memory and so I assume there is a way to find the address of isAllowed during runtime as it changes on every run of the target program. But knowing that Ptrace is complex, it will make the inject.c program too long and complex for the objective of this demo.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Assume that <em>isAllowed</em> checks if you have permission before allowing you to do a certain critcial task. By default running the target program just prints <em>Sorry</em> indicating you don&rsquo;t have permission. By using ptrace and hooking to the target program during runtime we are able to modify the return value of our target function so <em>Allowed!</em> is printed. As you can see, Ptrace is powerful and useful but can be used maliciously as well, that all depends as running the inject program above requires root
+privilage since it&rsquo;s using Ptrace. So becareful running programs as root especially those downloaded from the internet.</p>
+<figure>
+    <img loading="lazy" src="../ptrace_demo.gif"
+         alt="Animation"/> <figcaption>
+            Ptrace demo run of the two programs above. left is target program, right is inject program
+        </figcaption>
+</figure>
+
+<h4 id="hooking-example-2-dynamic-library-injection">Hooking Example 2 (Dynamic Library Injection)<a hidden class="anchor" aria-hidden="true" href="#hooking-example-2-dynamic-library-injection">#</a></h4>
+<p>This is a really popular and easier method. It&rsquo;s not just done on linux but also Windows as well. It&rsquo;s widely explained online by others in great detail. I might write a demo here from scratch but for now look at this github repo: <a href="https://github.com/kubo/plthook">https://github.com/kubo/plthook</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="http://localhost:1313/">Sultan Aloufi  🇸🇦</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

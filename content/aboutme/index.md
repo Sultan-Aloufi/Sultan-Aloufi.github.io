@@ -42,6 +42,6 @@ Beyond my professional roles, I have worked on several **technical projects**, i
   
 
 ## More About Me  
-I take pride in being a **Saudi Muslim**, balancing my roots in **Saudi Arabia** with my career in the **United States**. My interests extend beyond cybersecurity, I enjoy exploring new technologies, engaging in research, and mentoring aspiring security professionals. Outside of tech, I enjoy calisthenics and sleep.    
+I'm a **Saudi citizen**, balancing my roots in **Saudi Arabia** with my career in the **United States**. My interests extend beyond cybersecurity, I enjoy exploring new technologies, engaging in research, and mentoring aspiring security professionals. Outside of tech, I enjoy calisthenics and sleep.    
   
 📫 [LinkedIn](https://www.linkedin.com/in/sultan-aloufi/) | ✉️ saloufi01@gmail.com  
